@@ -1,5 +1,5 @@
-import { CategoryService } from './category.service';
-import { Category } from './category.entity';
+import { BrandService } from './brand.service';
+import { Brand } from './brand.entity';
 import {
   Controller,
   Get,
@@ -15,46 +15,46 @@ import {
 } from '@nestjs/common';
 
 @Controller('categories')
-export class CategoryController {
-  constructor(private readonly service: CategoryService) {}
+export class BrandController {
+  constructor(private readonly service: BrandService) {}
 
   @Get()
-  findAll(): Promise<Category[]> {
+  findAll(): Promise<Brand[]> {
     //Retorna todas as categorias
     return this.service.findAll();
   }
 
   @Get(':id')
-  async findById(@Param('id', ParseUUIDPipe) id: string): Promise<Category> {
+  async findById(@Param('id', ParseUUIDPipe) id: string): Promise<Brand> {
     const found = await this.service.findById(id); //
 
     if (!found) {
-      throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Brand not found', HttpStatus.NOT_FOUND);
     }
 
     return found;
   }
 
   @Post()
-  create(@Body() category: Category): Promise<Category> {
-    return this.service.save(category);
+  create(@Body() brand: Brand): Promise<Brand> {
+    return this.service.save(brand);
   }
 
   @Put(':id')
   async cupdate(
     @Param('id', ParseUUIDPipe) id: string,
     @Body()
-    category: Category,
-  ): Promise<Category> {
+    brand: Brand,
+  ): Promise<Brand> {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Brand not found', HttpStatus.NOT_FOUND);
     }
 
-    category.id = id;
+    brand.id = id;
 
-    return this.service.save(category);
+    return this.service.save(brand);
   }
 
   @Delete(':id')
