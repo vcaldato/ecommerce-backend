@@ -2,6 +2,7 @@ import { Repository } from 'typeorm';
 import { Product } from './product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
+import { Category } from '../categories/category.entity';
 
 //Classe que acessa os dados
 
@@ -11,7 +12,15 @@ export class ProductService {
     @InjectRepository(Product)
     private repository: Repository<Product>,
   ) {}
-  findAll(): Promise<Product[]> {
+  findAll(category?: Category): Promise<Product[]> {
+    if (category) {
+      return this.repository.find();
+    } else {
+      return this.repository.find({
+        where: { category: category },
+      });
+    }
+
     return this.repository.find();
   }
 

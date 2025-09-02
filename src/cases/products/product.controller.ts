@@ -12,16 +12,23 @@ import {
   Put,
   Delete,
   HttpCode,
+  Query,
 } from '@nestjs/common';
+import { CategoryService } from '../categories/category.service';
 
 @Controller('products')
 export class ProductController {
-  constructor(private readonly service: ProductService) {}
+  constructor(
+    private readonly CategoryService: CategoryService,
+    private readonly service: ProductService,
+  ) {}
 
   @Get()
-  findAll(): Promise<Product[]> {
-    //Retorna todas as categorias
-    return this.service.findAll();
+  async findAll(
+    @Query('categoryId', ParseUUIDPipe) categoryId: string,
+  ): Promise<Product[]> {
+    const category = await this.CategoryService.findById(categoryId);
+    return this.service.findAll(category ? category : undefined);
   }
 
   @Get(':id')
