@@ -14,13 +14,8 @@ export class ProductService {
   ) {}
   findAll(category?: Category): Promise<Product[]> {
     if (category) {
-      return this.repository.find();
-    } else {
-      return this.repository.find({
-        where: { category: category },
-      });
+      return this.repository.find({ where: { category } });
     }
-
     return this.repository.find();
   }
 

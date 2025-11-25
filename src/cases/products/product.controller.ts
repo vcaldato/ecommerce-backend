@@ -25,10 +25,17 @@ export class ProductController {
 
   @Get()
   async findAll(
-    @Query('categoryId', ParseUUIDPipe) categoryId: string,
+    @Query('categoryId', new ParseUUIDPipe({ optional: true }))
+    categoryId?: string,
   ): Promise<Product[]> {
+    if (!categoryId) {
+      return this.service.findAll();
+    }
     const category = await this.CategoryService.findById(categoryId);
-    return this.service.findAll(category ? category : undefined);
+    if (!category) {
+      throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
+    }
+    return this.service.findAll(category);
   }
 
   @Get(':id')
