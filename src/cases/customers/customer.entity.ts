@@ -15,6 +15,9 @@ export class Customer {
   @Column({ length: 8, nullable: true })
   zipcode: string;
 
+  @Column({ nullable: true, unique: true })
+  supabase_user_id: string;
+
   @ManyToOne(() => City, { eager: true, nullable: true })
   state: City;
 }

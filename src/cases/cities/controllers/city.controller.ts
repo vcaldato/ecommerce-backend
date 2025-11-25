@@ -29,7 +29,7 @@ export class CityController {
     const found = await this.service.findById(id); //
 
     if (!found) {
-      throw new HttpException('City not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Cidade não encontrada', HttpStatus.NOT_FOUND);
     }
 
     return found;
@@ -49,7 +49,7 @@ export class CityController {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('City not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Cidade não encontrada', HttpStatus.NOT_FOUND);
     }
 
     city.id = id;
@@ -63,7 +63,7 @@ export class CityController {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Cidade não encontrada', HttpStatus.NOT_FOUND);
     }
 
     return this.service.remove(id);

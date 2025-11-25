@@ -33,7 +33,7 @@ export class ProductController {
     }
     const category = await this.CategoryService.findById(categoryId);
     if (!category) {
-      throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Categoria não encontrada', HttpStatus.NOT_FOUND);
     }
     return this.service.findAll(category);
   }
@@ -43,7 +43,7 @@ export class ProductController {
     const found = await this.service.findById(id); //
 
     if (!found) {
-      throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Produto não encontrado', HttpStatus.NOT_FOUND);
     }
 
     return found;
@@ -63,7 +63,7 @@ export class ProductController {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Produto não encontrado', HttpStatus.NOT_FOUND);
     }
 
     product.id = id;
@@ -77,7 +77,7 @@ export class ProductController {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Produto não encontrado', HttpStatus.NOT_FOUND);
     }
 
     return this.service.remove(id);

@@ -24,19 +24,34 @@ export class CustomerController {
     return this.service.findAll();
   }
 
+  @Get('by-supabase-user/:supabaseUserId')
+  async findBySupabaseUserId(
+    @Param('supabaseUserId') supabaseUserId: string,
+  ): Promise<Customer | null> {
+    return this.service.findBySupabaseUserId(supabaseUserId);
+  }
+
   @Get(':id')
   async findById(@Param('id', ParseUUIDPipe) id: string): Promise<Customer> {
     const found = await this.service.findById(id); //
 
     if (!found) {
-      throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Cliente não encontrado', HttpStatus.NOT_FOUND);
     }
 
     return found;
   }
 
   @Post()
-  create(@Body() customer: Customer): Promise<Customer> {
+  async create(@Body() customer: Customer): Promise<Customer> {
+    if (customer.supabase_user_id) {
+      const existing = await this.service.findBySupabaseUserId(
+        customer.supabase_user_id,
+      );
+      if (existing) {
+        return existing;
+      }
+    }
     return this.service.save(customer);
   }
 
@@ -49,7 +64,7 @@ export class CustomerController {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Cliente não encontrado', HttpStatus.NOT_FOUND);
     }
 
     customer.id = id;
@@ -63,7 +78,7 @@ export class CustomerController {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Cliente não encontrado', HttpStatus.NOT_FOUND);
     }
 
     return this.service.remove(id);

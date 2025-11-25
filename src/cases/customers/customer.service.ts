@@ -19,6 +19,10 @@ export class CustomerService {
     return this.repository.findOneBy({ id: id });
   }
 
+  findBySupabaseUserId(supabaseUserId: string): Promise<Customer | null> {
+    return this.repository.findOneBy({ supabase_user_id: supabaseUserId });
+  }
+
   save(category: Customer): Promise<Customer> {
     return this.repository.save(category);
   }

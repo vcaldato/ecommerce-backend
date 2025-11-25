@@ -29,7 +29,7 @@ export class StateController {
     const found = await this.service.findById(id); //
 
     if (!found) {
-      throw new HttpException('State not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Estado não encontrado', HttpStatus.NOT_FOUND);
     }
 
     return found;
@@ -49,7 +49,7 @@ export class StateController {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('State not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Estado não encontrado', HttpStatus.NOT_FOUND);
     }
 
     state.id = id;
@@ -63,7 +63,7 @@ export class StateController {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Estado não encontrado', HttpStatus.NOT_FOUND);
     }
 
     return this.service.remove(id);
