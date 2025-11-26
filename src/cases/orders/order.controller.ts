@@ -1,11 +1,15 @@
 import { OrderService } from './order.service';
-import { Controller, Get, Post, Body, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
 import { Order } from './entities/order.entity';
 
 interface CreateOrderDto {
   customerId: string;
   items: Array<{ productId: string; quantity: number }>;
   shipping?: number;
+}
+
+interface UpdateStatusDto {
+  status: string;
 }
 
 @Controller('orders')
@@ -32,6 +36,14 @@ export class OrderController {
   @Get(':id')
   findById(@Param('id', ParseUUIDPipe) id: string): Promise<Order | null> {
     return this.service.findById(id);
+  }
+
+  @Patch(':id/status')
+  async updateStatus(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateStatusDto,
+  ): Promise<Order> {
+    return this.service.updateStatus(id, dto.status);
   }
 }
 

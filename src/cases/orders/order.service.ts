@@ -95,5 +95,19 @@ export class OrderService {
       relations: ['customer', 'itens', 'itens.product'],
     });
   }
+
+  async updateStatus(id: string, status: string): Promise<Order> {
+    const order = await this.findById(id);
+    if (!order) {
+      throw new Error('Pedido não encontrado');
+    }
+    order.status = status;
+    const updated = await this.orderRepository.save(order);
+    const result = await this.findById(updated.id);
+    if (!result) {
+      throw new Error('Falha ao recuperar pedido atualizado');
+    }
+    return result;
+  }
 }
 
