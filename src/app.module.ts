@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { CityModule } from './cases/cities/city.module';
 import { CustomerModule } from './cases/customers/customer.module';
 import { OrderModule } from './cases/orders/order.module';
+import { FavoriteModule } from './cases/favorites/favorite.module';
+import { ReviewModule } from './cases/reviews/review.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { OrderModule } from './cases/orders/order.module';
     CityModule,
     CustomerModule,
     OrderModule,
+    FavoriteModule,
+    ReviewModule,
   ],
 })
 export class AppModule {}
