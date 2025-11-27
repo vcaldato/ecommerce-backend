@@ -24,4 +24,7 @@ export class Product {
 
   @ManyToOne(() => Brand, { eager: true, nullable: true })
   brand: Brand;
+
+  @Column({ nullable: true })
+  imageUrl: string;
 }
